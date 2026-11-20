@@ -4,15 +4,16 @@ import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
-  "inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45",
+  "inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary: "bg-coral-600 text-white shadow-coral hover:bg-coral-700",
-        dark: "bg-ink text-white hover:bg-ink-700",
+        /** Brand sage — the main "Book" action */
+        primary: "bg-sage-200 text-sage-900 shadow-soft hover:bg-sage-300",
+        /** Dark green — for actions sitting on sage or white surfaces */
+        dark: "bg-sage-800 text-white hover:bg-sage-900",
         outline: "border border-ink/15 bg-white text-ink hover:border-ink/40",
-        ghost: "text-ink hover:bg-ink/5",
-        light: "bg-white text-ink shadow-soft hover:bg-sun-100"
+        ghost: "text-ink hover:bg-ink/5"
       },
       size: {
         sm: "h-10 px-4 text-sm",

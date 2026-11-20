@@ -1,17 +1,17 @@
-import { useLocation } from "react-router-dom";
-import { BookingFlow } from "@/components/booking/BookingFlow";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { BookingForm } from "@/components/booking/BookingForm";
 
+/** Standalone booking page — handy for Instagram bio links (/booking?service=wedding-coverage). */
 export default function Booking() {
   const { search } = useLocation();
+  const [params] = useSearchParams();
   return (
-    <div className="container pb-32 pt-6 md:pb-24 md:pt-10">
-      <header className="mb-6 max-w-2xl md:mb-8">
-        <p className="eyebrow">Book a session</p>
-        <h1 className="mt-2 font-display text-[2.1rem] font-semibold leading-tight tracking-tight sm:text-5xl">Let's plan your photos.</h1>
-        <p className="mt-2 text-ink-500 md:text-lg">A short request — no payment, no commitment until we confirm with you.</p>
-      </header>
-      {/* Re-mount when the query changes (e.g. arriving from another "Book" link) */}
-      <BookingFlow key={search} />
+    <div className="container max-w-xl pb-24 pt-8 md:pt-14">
+      <h1 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">Book a session</h1>
+      <p className="mt-2 text-lg text-ink-500">Choose your event, date and place. It takes about two minutes.</p>
+      <div className="mt-6 rounded-3xl border border-line bg-white p-5 shadow-soft sm:p-7">
+        <BookingForm key={search} defaultServiceId={params.get("service")} defaultDate={params.get("date") || ""} />
+      </div>
     </div>
   );
 }

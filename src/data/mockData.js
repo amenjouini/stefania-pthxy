@@ -1,25 +1,4 @@
-import {
-  Aperture,
-  Award,
-  BadgeCheck,
-  BriefcaseBusiness,
-  Camera,
-  Clapperboard,
-  Crown,
-  Diamond,
-  Landmark,
-  Mountain,
-  Palette,
-  Sparkles,
-  Trophy,
-  WandSparkles
-} from "lucide-react";
-
-export const heroImage = {
-  src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=80",
-  alt: "A newly married couple raising their hands by a pool surrounded by red balloons and guests",
-  caption: "Destination wedding · Lake Como"
-};
+import { Aperture, Camera, Clapperboard, Diamond, Palette, Sparkles, WandSparkles } from "lucide-react";
 
 export const services = [
   {
@@ -71,18 +50,6 @@ export const services = [
     description: "Campaign and lookbook production with art direction, model pacing, location scouting, and luxury retouching."
   },
   {
-    id: "commercial-photography",
-    title: "Commercial Photography",
-    short: "Brands, spaces & founders",
-    category: "Shooting",
-    price: 2800,
-    duration: "Full day",
-    delivery: "14 days",
-    icon: BriefcaseBusiness,
-    image: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=1200&q=80",
-    description: "High-impact visuals for hospitality, founders, studios, campaigns, spaces, and brand launches."
-  },
-  {
     id: "product-photography",
     title: "Product Photography",
     short: "E-commerce ready product images",
@@ -129,7 +96,7 @@ export const categoryService = {
   Weddings: "wedding-coverage",
   Portraits: "photo-shooting",
   Fashion: "fashion-photography",
-  Commercial: "commercial-photography",
+  Commercial: "other",
   Events: "event-coverage",
   Nature: "photo-shooting",
   Travel: "photo-shooting"
@@ -158,15 +125,6 @@ export const portfolioItems = [
   image,
   ratio: ["4/5", "3/4", "1/1", "4/5", "2/3"][index % 5]
 }));
-
-export const achievements = [
-  { year: "2026", type: "Award", title: "International Photo Awards, Gold", icon: Trophy, detail: "Editorial wedding series recognized for cinematic composition." },
-  { year: "2025", type: "Feature", title: "Vogue Arabia Visual Story", icon: Crown, detail: "Luxury fashion campaign published as a ten-page feature." },
-  { year: "2025", type: "Exhibition", title: "The Geography of Light", icon: Landmark, detail: "Solo exhibition hosted across Tunis, Paris, and Milan." },
-  { year: "2024", type: "Milestone", title: "400th Commission Delivered", icon: BadgeCheck, detail: "A private travel story for a hospitality group in Japan." },
-  { year: "2023", type: "Competition", title: "Sony Alpha Regional Finalist", icon: Award, detail: "Selected for emotional portraiture and controlled natural light." },
-  { year: "2022", type: "Magazine", title: "National Geographic Your Shot", icon: Mountain, detail: "Travel image shortlisted for environmental storytelling." }
-];
 
 export const testimonials = [
   {
@@ -205,7 +163,7 @@ export const dashboard = {
 
 /** Public navigation. Admin stays reachable at /admin (linked from the footer). */
 export const navItems = [
-  { label: "Services & prices", href: "/services" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "About", href: "/achievements" }
+  { label: "Work", href: "/portfolio" },
+  { label: "Services", href: "/services" },
+  { label: "About", href: "/about" }
 ];

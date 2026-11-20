@@ -19,21 +19,22 @@
     min-width: 320px;
     margin: 0;
     overflow-x: hidden;
-    @apply bg-cream font-sans text-ink;
-  }
-
-  h1,
-  h2,
-  h3 {
-    font-optical-sizing: auto;
+    @apply bg-paper font-sans text-ink;
   }
 
   ::selection {
-    @apply bg-sun-300 text-ink;
+    @apply bg-sage-200 text-ink;
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-lagoon-600 ring-offset-2 ring-offset-cream;
+    @apply outline-none ring-2 ring-sage-700 ring-offset-2 ring-offset-paper;
+  }
+
+  /* Native date/time pickers: keep the icon visible and tappable */
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.7;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -51,23 +52,30 @@
 
 @layer components {
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-coral-600;
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-sage-700;
   }
 
   .masonry {
-    column-gap: 1rem;
+    column-gap: 0.75rem;
     columns: 2;
   }
 
   @media (min-width: 1024px) {
     .masonry {
+      column-gap: 1rem;
       columns: 3;
     }
   }
 
   .masonry > * {
     break-inside: avoid;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .masonry > * {
+      margin-bottom: 1rem;
+    }
   }
 
   .no-scrollbar {
@@ -79,61 +87,6 @@
   }
 
   .pb-safe {
-    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-  }
-}
-
-/* react-day-picker v9 — light theme */
-.calendar .rdp-root {
-  --rdp-accent-color: #0f766e;
-  --rdp-accent-background-color: #e9f6f3;
-  --rdp-day-height: 2.75rem;
-  --rdp-day-width: 2.75rem;
-  --rdp-day_button-height: 2.5rem;
-  --rdp-day_button-width: 2.5rem;
-  --rdp-day_button-border-radius: 999px;
-  --rdp-selected-border: 2px solid #0f766e;
-  --rdp-today-color: #cf4520;
-  color: #1c2b2e;
-  font-size: 0.95rem;
-}
-
-.calendar .rdp-month_caption {
-  font-family: Fraunces, Georgia, serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.calendar .rdp-weekday {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #4f5f62;
-  text-transform: uppercase;
-}
-
-.calendar .rdp-day:not(.rdp-selected) .rdp-day_button:hover:not([disabled]) {
-  background: #fff3d1;
-}
-
-.calendar .rdp-selected .rdp-day_button {
-  background: #0f766e;
-  color: #fff;
-  font-weight: 700;
-}
-
-.calendar .rdp-disabled {
-  opacity: 0.35;
-}
-
-.calendar .rdp-chevron {
-  fill: #1c2b2e;
-}
-
-@media (max-width: 380px) {
-  .calendar .rdp-root {
-    --rdp-day-height: 2.4rem;
-    --rdp-day-width: 2.4rem;
-    --rdp-day_button-height: 2.2rem;
-    --rdp-day_button-width: 2.2rem;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
 }

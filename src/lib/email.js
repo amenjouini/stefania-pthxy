@@ -9,7 +9,7 @@ export async function sendBookingEmail(booking) {
     subject: `New PHTXY booking: ${booking.service?.title}`,
     service: booking.service?.title,
     service_category: booking.service?.category,
-    price_estimate: formatCurrency(booking.service?.price || 0),
+    price_estimate: booking.service?.price ? formatCurrency(booking.service.price) : "To be quoted",
     delivery_estimate: booking.service?.delivery,
     session_date: formatDate(booking.date),
     session_time: booking.time || "Not required",

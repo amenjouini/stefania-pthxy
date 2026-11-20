@@ -14,16 +14,16 @@ function MiniChart() {
 
   return (
     <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="h-56 w-full overflow-visible" role="img" aria-label="Monthly booking value, trending upward over 12 months">
-      <polygon fill="#E9F6F3" points={`0,100 ${points} 100,100`} />
-      <polyline fill="none" stroke="#0F766E" strokeWidth="2" vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" points={points} />
+      <polygon fill="#E7F0E2" points={`0,100 ${points} 100,100`} />
+      <polyline fill="none" stroke="#3D5A34" strokeWidth="2" vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" points={points} />
     </svg>
   );
 }
 
 const statusColor = {
-  Confirmed: "bg-lagoon-50 text-lagoon-700",
-  Planning: "bg-sun-100 text-ink",
-  "Deposit Paid": "bg-sky-50 text-ink"
+  Confirmed: "bg-sage-100 text-sage-800",
+  Planning: "bg-sage-200 text-ink",
+  "Deposit Paid": "bg-sage-50 text-ink"
 };
 
 function PanelTitle({ icon: Icon, eyebrow, title }) {
@@ -33,7 +33,7 @@ function PanelTitle({ icon: Icon, eyebrow, title }) {
         {eyebrow ? <p className="text-sm font-medium text-ink-500">{eyebrow}</p> : null}
         <h2 className="font-display text-2xl font-semibold">{title}</h2>
       </div>
-      <span className="grid h-10 w-10 place-items-center rounded-2xl bg-coral-50 text-coral-600">
+      <span className="grid h-10 w-10 place-items-center rounded-2xl bg-sage-200 text-sage-900">
         <Icon className="h-5 w-5" />
       </span>
     </div>
@@ -56,7 +56,7 @@ export default function AdminDashboard() {
               <p className="text-sm text-ink-500">{metric.label}</p>
               <div className="mt-3 flex flex-wrap items-end justify-between gap-2">
                 <p className="font-display text-3xl font-semibold md:text-4xl">{metric.value}</p>
-                <span className="rounded-full bg-lagoon-50 px-2.5 py-1 text-xs font-semibold text-lagoon-700">{metric.trend}</span>
+                <span className="rounded-full bg-sage-100 px-2.5 py-1 text-xs font-semibold text-sage-800">{metric.trend}</span>
               </div>
             </CardContent>
           </Card>
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
                 <div
                   key={index}
                   className={`grid aspect-square place-items-center rounded-xl text-xs font-medium ${
-                    [3, 8, 13, 20, 27].includes(index) ? "bg-coral-600 text-white" : "bg-cream text-ink-500"
+                    [3, 8, 13, 20, 27].includes(index) ? "bg-sage-700 text-white" : "bg-sage-50 text-ink-500"
                   }`}
                 >
                   {index + 1}
@@ -110,7 +110,7 @@ export default function AdminDashboard() {
                       <td className="py-3.5 text-ink-700">{booking.service}</td>
                       <td className="py-3.5 text-ink-700">{booking.date}</td>
                       <td className="py-3.5">
-                        <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${statusColor[booking.status] || "bg-cream"}`}>{booking.status}</span>
+                        <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${statusColor[booking.status] || "bg-sage-50"}`}>{booking.status}</span>
                       </td>
                       <td className="py-3.5 text-right font-semibold">{booking.value}</td>
                     </tr>
@@ -126,9 +126,9 @@ export default function AdminDashboard() {
               <PanelTitle icon={Users} title="Customers" />
               <ul className="mt-5 grid gap-2">
                 {dashboard.customers.map((customer) => (
-                  <li key={customer} className="flex items-center justify-between rounded-2xl bg-cream px-4 py-3 text-sm font-medium">
+                  <li key={customer} className="flex items-center justify-between rounded-2xl bg-sage-50 px-4 py-3 text-sm font-medium">
                     {customer}
-                    <span className="h-2 w-2 rounded-full bg-lagoon-400" />
+                    <span className="h-2 w-2 rounded-full bg-sage-500" />
                   </li>
                 ))}
               </ul>
@@ -139,7 +139,7 @@ export default function AdminDashboard() {
               <PanelTitle icon={Settings2} title="Services" />
               <ul className="mt-5 grid gap-2">
                 {services.map((service) => (
-                  <li key={service.id} className="flex items-center justify-between rounded-2xl bg-cream px-4 py-3 text-sm">
+                  <li key={service.id} className="flex items-center justify-between rounded-2xl bg-sage-50 px-4 py-3 text-sm">
                     <span className="font-medium">{service.title}</span>
                     <span className="text-ink-500">${service.price.toLocaleString("en-US")}</span>
                   </li>

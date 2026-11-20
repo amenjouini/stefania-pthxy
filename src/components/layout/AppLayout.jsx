@@ -1,17 +1,18 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { CalendarDays, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useBooking } from "@/components/booking/BookingProvider";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/Button";
-import { navItems, services } from "@/data/mockData";
+import { navItems } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 
 function Header() {
+  const { openBooking } = useBooking();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
-  const onBooking = pathname === "/booking";
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -25,19 +26,15 @@ function Header() {
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (event) => event.key === "Escape" && setOpen(false);
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   return (
     <header
       className={cn(
         "sticky top-0 z-50 border-b transition-colors duration-300",
-        scrolled || open ? "border-line bg-cream/90 backdrop-blur-xl" : "border-transparent bg-cream"
+        scrolled || open ? "border-line bg-paper/90 backdrop-blur-xl" : "border-transparent bg-paper"
       )}
     >
       <div className="container flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
@@ -51,78 +48,52 @@ function Header() {
               key={item.href}
               to={item.href}
               className={({ isActive }) =>
-                cn(
-                  "rounded-full px-4 py-2 text-[0.95rem] font-medium text-ink-500 transition hover:bg-ink/5 hover:text-ink",
-                  isActive && "bg-white text-ink shadow-soft"
-                )
+                cn("rounded-full px-4 py-2 text-[0.95rem] font-medium text-ink-500 transition hover:text-ink", isActive && "bg-sage-100 text-ink")
               }
             >
               {item.label}
             </NavLink>
           ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          {!onBooking && (
-            <Button asChild size="sm" className="md:h-11 md:px-5">
-              <Link to="/booking">Book a session</Link>
+          {pathname !== "/booking" && (
+            <Button size="sm" className="ml-3 h-11 px-5" onClick={() => openBooking()}>
+              <CalendarDays className="h-4 w-4" />
+              Book
             </Button>
           )}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setOpen((value) => !value)}
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-          >
-            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
-        </div>
+        </nav>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => setOpen((value) => !value)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+        >
+          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </Button>
       </div>
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <motion.nav
             id="mobile-menu"
-            className="absolute inset-x-0 top-full h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-cream md:hidden"
+            aria-label="Mobile"
+            className="absolute inset-x-0 top-full border-b border-line bg-paper shadow-soft md:hidden"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.18 }}
           >
-            <nav aria-label="Mobile" className="container flex flex-col py-4">
-              <NavLink to="/" end className="border-b border-line py-4 font-display text-2xl font-medium">
-                Home
-              </NavLink>
-              {navItems.map((item) => (
-                <NavLink key={item.href} to={item.href} className="border-b border-line py-4 font-display text-2xl font-medium">
+            <div className="container flex flex-col py-2">
+              {[{ label: "Home", href: "/" }, ...navItems].map((item) => (
+                <NavLink key={item.href} to={item.href} end className="border-b border-line py-4 text-lg font-semibold last:border-0">
                   {item.label}
                 </NavLink>
               ))}
-            </nav>
-            <div className="container pb-8">
-              <p className="mb-3 mt-4 text-sm font-semibold text-ink-500">Popular</p>
-              <div className="flex flex-wrap gap-2">
-                {services.slice(0, 4).map((service) => (
-                  <Link
-                    key={service.id}
-                    to={`/booking?service=${service.id}`}
-                    className="rounded-full border border-line bg-white px-4 py-2 text-sm font-medium"
-                  >
-                    {service.title}
-                  </Link>
-                ))}
-              </div>
-              <Button asChild size="lg" className="mt-8 w-full">
-                <Link to="/booking">
-                  Book a session
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-              </Button>
             </div>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </header>
@@ -131,43 +102,29 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="border-t border-line bg-sand">
-      <div className="container grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="mt-auto border-t border-line bg-sage-50">
+      <div className="container flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
         <div>
           <Logo />
-          <p className="mt-4 max-w-sm leading-7 text-ink-500">
-            Photography for weddings, portraits, brands and events — based in Tunis, Paris and Milan, and happy to travel.
-          </p>
-          <Button asChild className="mt-6">
-            <Link to="/booking">
-              Book a session
-              <ArrowRight className="h-4 w-4" />
+          <p className="mt-3 text-sm text-ink-500">Photography studio · Tunis · Paris · Milan</p>
+        </div>
+        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-ink-500">
+          {navItems.map((item) => (
+            <Link key={item.href} to={item.href} className="hover:text-ink">
+              {item.label}
             </Link>
-          </Button>
-        </div>
-        <div>
-          <p className="mb-4 text-sm font-semibold">Explore</p>
-          <ul className="grid gap-3 text-ink-500">
-            <li><Link className="hover:text-ink" to="/services">Services & prices</Link></li>
-            <li><Link className="hover:text-ink" to="/portfolio">Portfolio</Link></li>
-            <li><Link className="hover:text-ink" to="/achievements">About & awards</Link></li>
-          </ul>
-        </div>
-        <div>
-          <p className="mb-4 text-sm font-semibold">Popular sessions</p>
-          <ul className="grid gap-3 text-ink-500">
-            {services.slice(0, 4).map((service) => (
-              <li key={service.id}>
-                <Link className="hover:text-ink" to={`/booking?service=${service.id}`}>{service.title}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+          ))}
+          <Link to="/booking" className="hover:text-ink">
+            Book
+          </Link>
+        </nav>
       </div>
       <div className="border-t border-line">
-        <div className="container flex flex-col gap-2 py-6 text-sm text-ink-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} PHTXY. Private commissions by appointment.</p>
-          <Link to="/admin" className="hover:text-ink">Studio dashboard</Link>
+        <div className="container flex flex-col gap-1 py-5 text-xs text-ink-500 sm:flex-row sm:justify-between">
+          <p>© {new Date().getFullYear()} PHTXY</p>
+          <Link to="/admin" className="hover:text-ink">
+            Studio dashboard
+          </Link>
         </div>
       </div>
     </footer>
@@ -176,7 +133,7 @@ function Footer() {
 
 export function AppLayout({ children }) {
   return (
-    <div className="flex min-h-screen flex-col bg-cream text-ink">
+    <div className="flex min-h-screen flex-col bg-paper text-ink">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-white"
@@ -184,7 +141,9 @@ export function AppLayout({ children }) {
         Skip to content
       </a>
       <Header />
-      <div id="main" className="flex-1">{children}</div>
+      <div id="main" className="flex-1">
+        {children}
+      </div>
       <Footer />
     </div>
   );
